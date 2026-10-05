@@ -283,13 +283,19 @@ public struct PopupModifier<Item: Equatable, PopupContent: View>: ViewModifier {
             isDragging: $isDragging,
             timeToHide: $timeToHide,
             params: params,
-            popupBodyBuilder: viewForItem != nil ? viewForItem! : view,
+            popupBodyBuilder: {
+                if let item {
+                    itemView(item)
+                } else if let tempItemView {
+                    tempItemView
+                } else {
+                    EmptyView()
+                }
+            },
             dismissCallback: { source in
                 dismissSource = source
                 isPresented = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    item = nil
-                }
+                item = nil
             }
         )
     }
