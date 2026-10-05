@@ -287,7 +287,9 @@ public struct PopupModifier<Item: Equatable, PopupContent: View>: ViewModifier {
             dismissCallback: { source in
                 dismissSource = source
                 isPresented = false
-                item = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    item = nil
+                }
             }
         )
     }
