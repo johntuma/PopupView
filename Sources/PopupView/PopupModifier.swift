@@ -266,15 +266,6 @@ public struct PopupModifier<Item: Equatable, PopupContent: View>: ViewModifier {
 
     @ViewBuilder
     private func popupBody() -> some View {
-        var viewForItem: (() -> PopupContent)? {
-            if let item = item {
-                return { itemView(item) }
-            } else if let tempItemView {
-                return { tempItemView }
-            }
-            return nil
-        }
-
         PopupBody(
             shouldShowContent: $shouldShowContent,
             showContent: $showContent,
@@ -299,7 +290,7 @@ public struct PopupModifier<Item: Equatable, PopupContent: View>: ViewModifier {
             }
         )
     }
-
+    
     private func popupBackground() -> some View {
         PopupBackgroundView(
             animatableOpacity: $animatableOpacity,
